@@ -13,6 +13,7 @@ License: 	GPL LGPL
 Group:     	Development/Other
 Source:    	http://librdf.org/dist/source/%{name}-%{version}.tar.bz2
 URL:       	http://www.redland.opensource.ac.uk/raptor/
+BuildRoot: 	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires: 	libxml2-devel
 BuildRequires:  curl-devel
 
