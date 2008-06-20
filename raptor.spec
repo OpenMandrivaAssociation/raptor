@@ -1,6 +1,6 @@
 %define name    raptor
-%define version 1.4.16
-%define release %mkrel 2
+%define version 1.4.17
+%define release %mkrel 1
 
 %define major	1
 %define libname %mklibname %{name} %{major}
@@ -11,8 +11,8 @@ Version:   	%{version}
 Release:   	%{release}
 License: 	GPL LGPL
 Group:     	Development/Other
-Source:    	http://librdf.org/dist/source/%{name}-%{version}.tar.bz2
-URL:       	http://www.redland.opensource.ac.uk/raptor/
+Source:    	http://librdf.org/dist/source/%{name}-%{version}.tar.gz
+URL:       	http://librdf.org/raptor/
 BuildRoot: 	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires: 	libxml2-devel
 BuildRequires:  curl-devel
