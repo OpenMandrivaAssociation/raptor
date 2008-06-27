@@ -1,9 +1,10 @@
 %define name    raptor
 %define version 1.4.18
-%define release %mkrel 1
+%define release %mkrel 2
 
 %define major	1
 %define libname %mklibname %{name} %{major}
+%define develname %mklibname -d %{name}
 
 Summary:   	Raptor RDF Parser Toolkit for Redland
 Name:      	%{name}
@@ -29,14 +30,15 @@ Group:          System/Libraries
 %description -n	%{libname}
 Dynamic libraries from %{name}.
 
-%package -n	%{libname}-devel
+%package -n	%{develname}
 Summary:	Header files and static libraries from %name
 Group:		Development/C
 Requires:	%{libname} >= %{version}
-Provides:	lib%{name}-devel = %{version}-%{release} %{name}-devel = %{version}-%{release} 
-Obsoletes:	%{name}-devel
+Provides:	%{name}-devel = %{version}-%{release} 
+Obsoletes:	%{name}-devel < %{version}-%{release}
+Obsoletes:	%{mklibname -d raptor 1}
 
-%description -n	%{libname}-devel
+%description -n	%{develname}
 Libraries and includes files for developing programs based on %{name}.
 
 %prep
@@ -75,7 +77,7 @@ rm -rf %{buildroot}
 %defattr(-,root,root)
 %{_libdir}/lib*.so.*
 
-%files -n %libname-devel
+%files -n %develname
 %defattr(-, root, root)
 %{_libdir}/lib*.so
 %{_libdir}/*.a
