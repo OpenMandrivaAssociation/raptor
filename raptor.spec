@@ -1,6 +1,6 @@
 %define name    raptor
-%define version 1.4.18
-%define release %mkrel 3
+%define version 1.4.19
+%define release %mkrel 1
 
 %define major	1
 %define libname %mklibname %{name} %{major}
@@ -76,7 +76,7 @@ rm -rf %{buildroot}
 
 %files -n %libname
 %defattr(-,root,root)
-%{_libdir}/lib*.so.*
+%{_libdir}/lib*.so.%{major}*
 
 %files -n %develname
 %defattr(-, root, root)
