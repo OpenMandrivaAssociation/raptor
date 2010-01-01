@@ -1,5 +1,5 @@
 %define name    raptor
-%define version 1.4.19
+%define version 1.4.20
 %define release %mkrel 1
 
 %define major	1
