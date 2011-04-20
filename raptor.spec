@@ -1,6 +1,6 @@
 %define name    raptor
 %define version 1.4.21
-%define release %mkrel 2
+%define release %mkrel 3
 
 %define major	1
 %define libname %mklibname %{name} %{major}
@@ -17,7 +17,7 @@ URL:       	http://librdf.org/raptor/
 BuildRoot: 	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires: 	libxml2-devel
 BuildRequires:  curl-devel
-Requires:       %{libname}
+Requires:	%{libname} >= %{version}
 
 %description
 Raptor is the RDF Parser Toolkit for Redland that provides
@@ -38,6 +38,7 @@ Requires:	%{libname} >= %{version}
 Provides:	%{name}-devel = %{version}-%{release} 
 Obsoletes:	%{name}-devel < %{version}-%{release}
 Obsoletes:	%{mklibname -d raptor 1}
+Conflicts:	%{name} < 1.4.21-3
 
 %description -n	%{develname}
 Libraries and includes files for developing programs based on %{name}.
@@ -70,7 +71,7 @@ rm -rf %{buildroot}
 %files
 %defattr(-, root, root)
 %doc AUTHORS COPYING COPYING.LIB ChangeLog LICENSE.txt NEWS README
-%{_mandir}/man1/rap*
+%{_mandir}/man1/rapper.1*
 %{_mandir}/man3/libraptor.3*
 %{_bindir}/rapper
 
@@ -88,3 +89,4 @@ rm -rf %{buildroot}
 %_datadir/gtk-doc/html/raptor/
 %multiarch %{multiarch_bindir}/raptor-config
 %{_bindir}/raptor-config
+%{_mandir}/man1/raptor-config.1*
