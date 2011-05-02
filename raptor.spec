@@ -1,6 +1,6 @@
 %define name    raptor
 %define version 1.4.21
-%define release %mkrel 3
+%define release %mkrel 4
 
 %define major	1
 %define libname %mklibname %{name} %{major}
@@ -87,6 +87,6 @@ rm -rf %{buildroot}
 %{_libdir}/pkgconfig/%{name}.pc
 %{_includedir}/*
 %_datadir/gtk-doc/html/raptor/
-%multiarch %{multiarch_bindir}/raptor-config
+%{multiarch_bindir}/raptor-config
 %{_bindir}/raptor-config
 %{_mandir}/man1/raptor-config.1*
