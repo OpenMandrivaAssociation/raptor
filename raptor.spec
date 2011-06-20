@@ -1,6 +1,6 @@
 %define name    raptor
 %define version 1.4.21
-%define release %mkrel 4
+%define release %mkrel 5
 
 %define major	1
 %define libname %mklibname %{name} %{major}
@@ -57,6 +57,10 @@ install -d %{buildroot}%{_mandir}/man{1,3}
 
 #multiarch
 %multiarch_binaries %{buildroot}%{_bindir}/raptor-config
+
+%if "%{_lib}" == "lib64"
+perl -pi -e "s|-L/usr/lib\b|-L%{_libdir}|g" %{buildroot}%{_libdir}/*.la
+%endif
 
 %clean
 rm -rf %{buildroot}
