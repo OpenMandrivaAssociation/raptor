@@ -11,6 +11,7 @@ Group:     	Development/Other
 URL:       	http://librdf.org/raptor/
 Source0:	http://librdf.org/dist/source/%{name}-%{version}.tar.gz
 Patch0:		raptor-1.4.21-mdv_conf.diff
+Patch1:		raptor-1.4.21-CVE-2012-0037.diff
 BuildRequires: 	libxml2-devel
 BuildRequires:  curl-devel
 Requires:	%{libname} >= %{version}
@@ -43,6 +44,7 @@ Libraries and includes files for developing programs based on %{name}.
 
 %setup -q
 %patch0 -p0
+%patch1 -p1 -b .CVE-2012-0037
 
 %build
 %configure2_5x
