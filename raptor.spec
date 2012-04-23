@@ -1,20 +1,15 @@
-%define name    raptor
-%define version 1.4.21
-%define release %mkrel 5
-
-%define major	1
+%define major 1
 %define libname %mklibname %{name} %{major}
 %define develname %mklibname -d %{name}
 
 Summary:   	Raptor RDF Parser Toolkit for Redland
-Name:      	%{name}
-Version:   	%{version}
-Release:   	%{release}
+Name:      	raptor
+Version:   	1.4.21
+Release:   	6
 License: 	GPL LGPL
 Group:     	Development/Other
 Source:    	http://librdf.org/dist/source/%{name}-%{version}.tar.gz
 URL:       	http://librdf.org/raptor/
-BuildRoot: 	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires: 	libxml2-devel
 BuildRequires:  curl-devel
 Requires:	%{libname} >= %{version}
@@ -51,43 +46,26 @@ Libraries and includes files for developing programs based on %{name}.
 %make
 
 %install
-rm -rf %{buildroot}
+
 install -d %{buildroot}%{_mandir}/man{1,3}
 %makeinstall
 
 #multiarch
 %multiarch_binaries %{buildroot}%{_bindir}/raptor-config
 
-%if "%{_lib}" == "lib64"
-perl -pi -e "s|-L/usr/lib\b|-L%{_libdir}|g" %{buildroot}%{_libdir}/*.la
-%endif
-
-%clean
-rm -rf %{buildroot}
-
-%if %mdkversion < 200900
-%post -n %libname -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun -n %libname -p /sbin/ldconfig
-%endif
+rm -f %{buildroot}%{_libdir}/*.*a
 
 %files
-%defattr(-, root, root)
 %doc AUTHORS COPYING COPYING.LIB ChangeLog LICENSE.txt NEWS README
 %{_mandir}/man1/rapper.1*
 %{_mandir}/man3/libraptor.3*
 %{_bindir}/rapper
 
 %files -n %libname
-%defattr(-,root,root)
 %{_libdir}/lib*.so.%{major}*
 
 %files -n %develname
-%defattr(-, root, root)
 %{_libdir}/lib*.so
-%{_libdir}/*.a
-%{_libdir}/*.la
 %{_libdir}/pkgconfig/%{name}.pc
 %{_includedir}/*
 %_datadir/gtk-doc/html/raptor/
