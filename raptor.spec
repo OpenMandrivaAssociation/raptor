@@ -8,8 +8,9 @@ Version:   	1.4.21
 Release:   	6
 License: 	GPL LGPL
 Group:     	Development/Other
-Source:    	http://librdf.org/dist/source/%{name}-%{version}.tar.gz
 URL:       	http://librdf.org/raptor/
+Source0:	http://librdf.org/dist/source/%{name}-%{version}.tar.gz
+Patch0:		raptor-1.4.21-mdv_conf.diff
 BuildRequires: 	libxml2-devel
 BuildRequires:  curl-devel
 Requires:	%{libname} >= %{version}
@@ -39,7 +40,9 @@ Conflicts:	%{name} < 1.4.21-3
 Libraries and includes files for developing programs based on %{name}.
 
 %prep
+
 %setup -q
+%patch0 -p0
 
 %build
 %configure2_5x
@@ -49,9 +52,6 @@ Libraries and includes files for developing programs based on %{name}.
 
 install -d %{buildroot}%{_mandir}/man{1,3}
 %makeinstall
-
-#multiarch
-%multiarch_binaries %{buildroot}%{_bindir}/raptor-config
 
 rm -f %{buildroot}%{_libdir}/*.*a
 
@@ -69,6 +69,5 @@ rm -f %{buildroot}%{_libdir}/*.*a
 %{_libdir}/pkgconfig/%{name}.pc
 %{_includedir}/*
 %_datadir/gtk-doc/html/raptor/
-%{multiarch_bindir}/raptor-config
 %{_bindir}/raptor-config
 %{_mandir}/man1/raptor-config.1*
