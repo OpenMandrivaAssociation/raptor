@@ -1,0 +1,42 @@
+--- src/raptor-config.in	2009-07-16 18:47:37.000000000 +0200
++++ src/raptor-config.in.oden	2012-04-23 10:51:34.335822791 +0200
+@@ -40,7 +40,7 @@
+ 
+   --prefix[=DIR]        change raptor prefix [default $prefix]
+   --libs                print library linking information
+-  --libtool-libs        print linking information for use with libtool
++  --libtool-libs        Alias for --libs
+   --private-libs        print library private/static linking information
+   --cflags		print pre-processor and compiler flags
+   --options		print raptor library compiled options
+@@ -84,14 +84,11 @@
+     --options)
+       echo_options=yes
+       ;;
+-    --libs)
+-      echo_libs=yes
+-      ;;
+-    --libtool-libs)
+-      echo_libtool_libs=yes
++    --libs|--libtool-libs)
++      echo "-lraptor"
+       ;;
+     --private-libs)
+-      echo_private_libs=yes
++      echo "@LIBS@"
+       ;;
+     --help|--usage)
+       usage 0
+@@ -129,12 +126,3 @@
+     fi
+   done
+ fi
+-if test "$echo_libs" = "yes"; then
+-  echo -L@libdir@ -lraptor
+-fi
+-if test "$echo_libtool_libs" = "yes"; then
+-  echo @libdir@/@RAPTOR_LIBTOOLLIBS@
+-fi
+-if test "$echo_private_libs" = "yes"; then
+-  echo @LIBS@
+-fi
