@@ -2,7 +2,7 @@
 %define libname %mklibname %{name} %{major}
 %define develname %mklibname -d %{name}
 
-Summary:   	Raptor RDF Parser Toolkit for Redland
+Summary:   	RDF Parser Toolkit for Redland
 Name:      	raptor
 Version:   	1.4.21
 Release:   	11
