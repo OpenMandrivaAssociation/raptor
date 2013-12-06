@@ -5,7 +5,7 @@
 Summary:   	RDF Parser Toolkit for Redland
 Name:      	raptor
 Version:   	1.4.21
-Release:   	15
+Release:   	16
 License: 	GPL LGPL
 Group:     	Development/Other
 URL:       	http://librdf.org/raptor/
