@@ -14,6 +14,7 @@ Patch0:		raptor-1.4.21-mdv_conf.diff
 Patch1:		raptor-1.4.21-CVE-2012-0037.diff
 BuildRequires:	pkgconfig(libcurl)
 BuildRequires:	pkgconfig(libxml-2.0)
+BuildRequires:	pkgconfig(libxslt)
 
 %description
 Raptor is the RDF Parser Toolkit for Redland that provides
