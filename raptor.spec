@@ -8,7 +8,7 @@ Version:	1.4.21
 Release:	23
 License:	GPLv2
 Group:		Development/Other
-Url:		http://librdf.org/raptor/
+Url:		https://librdf.org/raptor/
 Source0:	http://librdf.org/dist/source/%{name}-%{version}.tar.gz
 Patch0:		raptor-1.4.21-mdv_conf.diff
 Patch1:		raptor-1.4.21-CVE-2012-0037.diff
