@@ -12,6 +12,11 @@ Url:		https://librdf.org/raptor/
 Source0:	http://librdf.org/dist/source/%{name}-%{version}.tar.gz
 Patch0:		raptor-1.4.21-mdv_conf.diff
 Patch1:		raptor-1.4.21-CVE-2012-0037.diff
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	pkgconfig(libcurl)
 BuildRequires:	pkgconfig(libxml-2.0)
 BuildRequires:	pkgconfig(libxslt)
