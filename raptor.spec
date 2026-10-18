@@ -12,6 +12,8 @@ Url:		https://librdf.org/raptor/
 Source0:	http://librdf.org/dist/source/%{name}-%{version}.tar.gz
 Patch0:		raptor-1.4.21-mdv_conf.diff
 Patch1:		raptor-1.4.21-CVE-2012-0037.diff
+# libxml2 2.12 made xmlError const, and xmlEntity.checked is gone
+Patch2:		raptor-1.4.21-libxml2-2.15.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	libtool-base

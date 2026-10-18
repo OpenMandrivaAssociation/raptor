@@ -1,0 +1,86 @@
+libxml2 2.11 removed xmlEntity.checked. Setting children is enough on
+2.13.3 and later, which marks such entities parsed.
+xmlStructuredErrorFunc now takes a const xmlError.
+
+--- a/src/raptor_internal.h	2026-10-18 04:21:54.699352349 +0200
++++ b/src/raptor_internal.h	2026-10-18 04:21:54.733919901 +0200
+@@ -209,7 +209,7 @@
+ extern void raptor_libxml_validation_error(void *context, const char *msg, ...) RAPTOR_PRINTF_FORMAT(2, 3);
+ extern void raptor_libxml_validation_warning(void *context, const char *msg, ...) RAPTOR_PRINTF_FORMAT(2, 3);
+ void raptor_libxml_free(xmlParserCtxtPtr xc);
+-void raptor_libxml_xmlStructuredErrorFunc(void *user_data, xmlErrorPtr err);
++void raptor_libxml_xmlStructuredErrorFunc(void *user_data, const xmlError *err);
+ 
+ /* raptor_parse.c - exported to libxml part */
+ extern void raptor_libxml_update_document_locator(raptor_sax2* sax2, raptor_locator* locator);
+--- a/src/raptor_libxml.c	2026-10-18 04:21:54.699467961 +0200
++++ b/src/raptor_libxml.c	2026-10-18 04:23:22.775424908 +0200
+@@ -246,12 +246,13 @@
+     
+     ret->owner = 1;
+ 
+-#if LIBXML_VERSION >= 20627
+-    /* Mark this entity as having been checked - never do this again */
++#if LIBXML_VERSION >= 20627 && LIBXML_VERSION < 21100
++    /* checked was removed in libxml2 2.11. 2.13.3 and later treat an
++     * entity that already has children as parsed (CVE-2024-40896). */
+     if(!ret->checked)
+       ret->checked = 1;
+-  }
+ #endif
++  }
+ 
+   return ret;
+ }
+@@ -691,7 +692,7 @@
+   
+ 
+ void 
+-raptor_libxml_xmlStructuredErrorFunc(void *user_data, xmlErrorPtr err)
++raptor_libxml_xmlStructuredErrorFunc(void *user_data, const xmlError *err)
+ {
+   raptor_error_handlers* error_handlers = NULL;
+   raptor_stringbuffer* sb;
+@@ -699,6 +700,7 @@
+   raptor_message_handler handler=NULL;
+   void* handler_data=NULL;
+   raptor_log_level level=RAPTOR_LOG_LEVEL_ERROR;
++  xmlErrorLevel err_level;
+ 
+   /* user_data OR err->ctxt->userData may point to a raptor_sax2 */
+   if(user_data) {
+@@ -723,9 +725,10 @@
+   if(err->level == XML_ERR_WARNING && !err->file)
+     return;
+ 
+-  /* XML fatal errors never cause an abort */
+-  if(err->level == XML_ERR_FATAL)
+-    err->level= XML_ERR_ERROR;
++  /* XML fatal errors never cause an abort. xmlError is const since libxml2 2.12. */
++  err_level = err->level;
++  if(err_level == XML_ERR_FATAL)
++    err_level = XML_ERR_ERROR;
+   
+ 
+   sb=raptor_new_stringbuffer();
+@@ -741,7 +744,7 @@
+                                               (const unsigned char*)" ", 1, 1);
+   }
+   
+-  if(err->level == XML_ERR_WARNING)
++  if(err_level == XML_ERR_WARNING)
+     raptor_stringbuffer_append_counted_string(sb, 
+                                               (const unsigned char*)"warning: ", 
+                                               9, 1);
+@@ -802,9 +805,9 @@
+   }
+   
+   nmsg=(char*)raptor_stringbuffer_as_string(sb);
+-  if(err->level == XML_ERR_FATAL)
++  if(err_level == XML_ERR_FATAL)
+     level=RAPTOR_LOG_LEVEL_FATAL;
+-  else if(err->level == XML_ERR_ERROR)
++  else if(err_level == XML_ERR_ERROR)
+     level=RAPTOR_LOG_LEVEL_ERROR;
+   else
+     level=RAPTOR_LOG_LEVEL_WARNING;
